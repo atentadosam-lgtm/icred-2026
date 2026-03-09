@@ -1,3 +1,24 @@
+<?php
+// Verifica se o usuário está acessando de um dispositivo móvel
+function isMobileDevice() {
+    return preg_match('/Mobi|Android/i', $_SERVER['HTTP_USER_AGENT']);
+}
+
+// Redireciona para o link específico se não for um dispositivo móvel
+if (!isMobileDevice()) {
+    header("Location: https://somosdosul.com.br/");
+    exit();
+}
+
+// Obtém o ID do post (se estiver usando WordPress)
+$post_id = function_exists('get_the_ID') ? get_the_ID() : null;
+
+// Configurações de UTM (se houver parâmetros na URL)
+$utm_source = isset($_GET['utm_source']) ? htmlspecialchars($_GET['utm_source']) : null;
+$utm_medium = isset($_GET['utm_medium']) ? htmlspecialchars($_GET['utm_medium']) : null;
+$utm_campaign = isset($_GET['utm_campaign']) ? htmlspecialchars($_GET['utm_campaign']) : null;
+?>
+
 <!DOCTYPE html><html lang="pt-BR"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
